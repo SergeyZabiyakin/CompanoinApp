@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
     android:layout_height="150dp">
     <androidx.constraintlayout.motion.widget.MotionLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/motion_layout"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -30,15 +30,28 @@
 
         <ImageButton
             android:id="@+id/screen"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/ic_screen" />
 
         <ImageButton
             android:id="@+id/stop"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/ic_stop" />
+
+        <ImageButton
+            android:id="@+id/okey"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_okey"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/crop"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_crop" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </RelativeLayout>

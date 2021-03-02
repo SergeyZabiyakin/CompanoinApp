@@ -34,7 +34,7 @@ class MainBackService : Service() {
         //val display = this.resources.displayMetrics
         overlayViewBack = OverlayViewBack(this, windowManager)
         overlayViewBack.setonClickListenerSettings {
-            Toast.makeText(this, "Click !", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Click !", Toast.LENGTH_SHORT).show()
         }
         overlayViewTop = OverlayViewTop(
             this,

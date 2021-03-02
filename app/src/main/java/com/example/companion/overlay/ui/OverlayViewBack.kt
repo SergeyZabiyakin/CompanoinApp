@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.companion.R
 import com.example.companion.overlay.util.State
@@ -102,6 +101,16 @@ class OverlayViewBack(
     fun setonClickListenerSettings(handler: () -> Unit) {
         motion.findViewById<ImageButton>(R.id.data).setOnClickListener {
             //my anim
+            state = State.Animated
+            scope.launch {
+                motion.setTransition(R.id.close_center)
+                motion.transitionToEnd()
+                motion.awaitTransitionComplete(R.id.start_center)
+                motion.setTransition(R.id.click_center_screen)
+                motion.transitionToEnd()
+                motion.awaitTransitionComplete(R.id.center_click_screen)
+                state = State.OPENCSREEN
+            }
             handler()
         }
     }
