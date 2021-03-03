@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CameraPhotoActivity">
+
+    <ImageView
+        android:id="@+id/displayImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintEnd_toEndOf="parent"
+        tools:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_camera"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

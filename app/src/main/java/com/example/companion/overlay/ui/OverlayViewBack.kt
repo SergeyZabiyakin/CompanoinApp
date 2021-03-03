@@ -18,8 +18,8 @@ import kotlinx.coroutines.*
  */
 
 class OverlayViewBack(
-    context: Context,
-    private val windowManager: WindowManager
+        context: Context,
+        private val windowManager: WindowManager
 ) {
     private val relative: View = View.inflate(context, R.layout.overlay_view_back, null)
     private val motion: MotionLayout = relative.findViewById(R.id.motion_layout) as MotionLayout
@@ -62,10 +62,10 @@ class OverlayViewBack(
         }
 
         params.flags =
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
         windowManager.updateViewLayout(relative, params)
     }
 
@@ -100,7 +100,6 @@ class OverlayViewBack(
 
     fun setonClickListenerSettings(handler: () -> Unit) {
         motion.findViewById<ImageButton>(R.id.data).setOnClickListener {
-            //my anim
             state = State.Animated
             scope.launch {
                 motion.setTransition(R.id.close_center)
@@ -124,8 +123,14 @@ class OverlayViewBack(
 
     fun setonClickListenerCamera(handler: () -> Unit) {
         motion.findViewById<ImageButton>(R.id.stop).setOnClickListener {
-            //my anim
-            handler()
+            state = State.Animated
+            scope.launch {
+                motion.setTransition(R.id.close_center)
+                motion.transitionToEnd()
+                motion.awaitTransitionComplete(R.id.start_center)
+                state = State.CLOSE
+                handler()
+            }
         }
     }
 
