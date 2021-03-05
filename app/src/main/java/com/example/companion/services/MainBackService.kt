@@ -5,8 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.view.*
-import android.widget.Toast
-import com.example.companion.activity.CameraPhotoActivity
+import com.example.companion.activity.ActivityImage
 import com.example.companion.overlay.ui.OverlayViewTop
 import com.example.companion.overlay.ui.OverlayViewBack
 
@@ -38,7 +37,7 @@ class MainBackService : Service() {
             //Toast.makeText(this, "Click !", Toast.LENGTH_SHORT).show()
         }
         overlayViewBack.setonClickListenerCamera {
-            val intent = Intent(this, CameraPhotoActivity::class.java).apply {
+            val intent = Intent(this, ActivityImage::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(intent)

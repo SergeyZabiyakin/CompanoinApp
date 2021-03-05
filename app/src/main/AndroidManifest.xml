@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CameraPhotoActivity"
+        <activity android:name=".activity.ActivityImage"
             android:theme="@style/AppTheme"/>
         <provider
             android:name="androidx.core.content.FileProvider"

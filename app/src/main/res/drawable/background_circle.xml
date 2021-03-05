@@ -6,8 +6,9 @@
         android:right="25dp"
         android:top="25dp" />
     <gradient
-        android:endColor="#CD27D3FD"
+        android:endColor="#E627D3FD"
         android:gradientRadius="80dp"
-        android:startColor="#0000C9FB"
+        android:startColor="#B2FFFFFF"
         android:type="radial" />
+    <stroke android:width="1dp" android:color="#CD00CDFF" />
 </shape>

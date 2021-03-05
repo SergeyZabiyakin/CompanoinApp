@@ -13,6 +13,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.WindowManager
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -28,25 +29,30 @@ import java.io.IOException
 import java.net.URI
 import java.util.*
 
-class CameraPhotoActivity : AppCompatActivity() {
+class ActivityImage : AppCompatActivity() {
     private val CAMERA_PERM_CODE = 101
 
     private val startForResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val file = File(currentPhotoPath)
-                    imageView.scaleType = ImageView.ScaleType.FIT_XY
-                    imageView.setImageURI(Uri.fromFile(file))
-                }
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val file = File(currentPhotoPath)
+                imageView.scaleType = ImageView.ScaleType.FIT_XY
+                imageView.setImageURI(Uri.fromFile(file))
             }
+        }
 
     lateinit var imageView: ImageView
+    lateinit var buttonBack: ImageButton
     lateinit var currentPhotoPath: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_camera)
         imageView = findViewById(R.id.displayImageView)
+        buttonBack = findViewById(R.id.buttonBack)
+        buttonBack.setOnClickListener {
+            finish()
+        }
 
         if (checkCameraHardware(this)) {
             askCameraPermissions()
@@ -58,24 +64,29 @@ class CameraPhotoActivity : AppCompatActivity() {
 
     /** Check if this device has a camera */
     private fun checkCameraHardware(context: Context): Boolean {
-        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
+        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
     }
 
     private fun askCameraPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.CAMERA),
-                    CAMERA_PERM_CODE)
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERM_CODE
+            )
         } else {
             dispatchTakePictureIntent()
         }
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -83,7 +94,11 @@ class CameraPhotoActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     dispatchTakePictureIntent()
                 } else {
-                    Toast.makeText(this, "Camera Permission is Required to use camera !", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Camera Permission is Required to use camera !",
+                        Toast.LENGTH_LONG
+                    ).show()
                     finish()
                 }
             }
@@ -98,9 +113,9 @@ class CameraPhotoActivity : AppCompatActivity() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         return File.createTempFile(
-                "JPEG_${timeStamp}_", /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
@@ -121,9 +136,9 @@ class CameraPhotoActivity : AppCompatActivity() {
                 // Continue only if the File was successfully created
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
-                            this,
-                            "com.example.android.fileProvider",
-                            it
+                        this,
+                        "com.example.android.fileProvider",
+                        it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startForResult.launch(takePictureIntent)
