@@ -1,4 +1,4 @@
-package com.example.companion.overlay.util
+package com.example.companion.ui.components.util
 
 enum class State {
     //MotionLayout visible

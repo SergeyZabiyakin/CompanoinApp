@@ -1,4 +1,4 @@
-package com.example.companion.activity
+package com.example.companion.ui.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.provider.Settings.canDrawOverlays
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
-import com.example.companion.services.MainBackService
+import com.example.companion.service.MainService
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val startForResult =
         registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                Intent(this, MainBackService::class.java).also { intent ->
+                Intent(this, MainService::class.java).also { intent ->
                     startService(intent)
                 }
 
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
         if (canDrawOverlays(this)) {
-            Intent(this, MainBackService::class.java).also { intent ->
+            Intent(this, MainService::class.java).also { intent ->
                 startService(intent)
             }
         } else {

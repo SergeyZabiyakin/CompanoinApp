@@ -1,10 +1,11 @@
-package com.example.companion.overlay.util
+package com.example.companion.ui.components.util
 
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.motion.widget.TransitionAdapter
 import kotlinx.coroutines.*
 
 /**
+ * Code from https://github.com/android/views-widgets-samples/issues/159
+ *
  * Wait for the transition to complete so that the given [transitionId] is fully displayed.
  *
  * @param transitionId The transition set to await the completion of

@@ -1,4 +1,4 @@
-package com.example.companion.overlay.ui
+package com.example.companion.ui.components
 
 import android.content.Context
 import android.graphics.PixelFormat
@@ -9,17 +9,17 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.companion.R
-import com.example.companion.overlay.util.State
-import com.example.companion.overlay.util.awaitTransitionComplete
+import com.example.companion.ui.components.util.State
+import com.example.companion.ui.components.util.awaitTransitionComplete
 import kotlinx.coroutines.*
 
 /**
  *  It is motionLayout view
  */
 
-class OverlayViewBack(
-        context: Context,
-        private val windowManager: WindowManager
+class OverlayBack(
+    context: Context,
+    private val windowManager: WindowManager
 ) {
     private val relative: View = View.inflate(context, R.layout.overlay_view_back, null)
     private val motion: MotionLayout = relative.findViewById(R.id.motion_layout) as MotionLayout
@@ -62,14 +62,14 @@ class OverlayViewBack(
         }
 
         params.flags =
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
         windowManager.updateViewLayout(relative, params)
     }
 
-    fun close() {
+    fun close(handler: () -> Unit = {}) {
         state = State.Animated
 
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
@@ -81,6 +81,7 @@ class OverlayViewBack(
             motion.transitionToEnd()
             motion.awaitTransitionComplete(R.id.start_center)
             state = State.CLOSE
+            handler()
         }
     }
 
@@ -93,13 +94,18 @@ class OverlayViewBack(
 
     fun setonClickListenerExit(handler: () -> Unit) {
         motion.findViewById<ImageButton>(R.id.exit).setOnClickListener {
-            //my anim
-            handler()
+            close(handler)
         }
     }
 
-    fun setonClickListenerSettings(handler: () -> Unit) {
+    fun setonClickListenerGallery(handler: () -> Unit) {
         motion.findViewById<ImageButton>(R.id.data).setOnClickListener {
+            close(handler)
+        }
+    }
+
+    fun setonClickListenerScreen(handler: () -> Unit) {
+        motion.findViewById<ImageButton>(R.id.screen).setOnClickListener {
             state = State.Animated
             scope.launch {
                 motion.setTransition(R.id.close_center)
@@ -109,28 +115,14 @@ class OverlayViewBack(
                 motion.transitionToEnd()
                 motion.awaitTransitionComplete(R.id.center_click_screen)
                 state = State.OPENCSREEN
+                handler()
             }
-            handler()
-        }
-    }
-
-    fun setonClickListenerScreen(handler: () -> Unit) {
-        motion.findViewById<ImageButton>(R.id.screen).setOnClickListener {
-            //my anim
-            handler()
         }
     }
 
     fun setonClickListenerCamera(handler: () -> Unit) {
         motion.findViewById<ImageButton>(R.id.stop).setOnClickListener {
-            state = State.Animated
-            scope.launch {
-                motion.setTransition(R.id.close_center)
-                motion.transitionToEnd()
-                motion.awaitTransitionComplete(R.id.start_center)
-                state = State.CLOSE
-                handler()
-            }
+            close(handler)
         }
     }
 

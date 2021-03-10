@@ -5,7 +5,12 @@
       <map>
         <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/background_circle.xml" value="0.25" />
         <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/ic_back.xml" value="0.18425925925925926" />
+        <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/ic_baseline_photo_camera_24.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/ic_camera.xml" value="0.17962962962962964" />
         <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/ic_crop.xml" value="0.17962962962962964" />
+        <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/ic_screen.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/drawable/ic_stop.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/layout/activity_image.xml" value="0.33" />
         <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/layout/activity_photo_camera.xml" value="0.18704710144927536" />
         <entry key="..\:/Users/rabto/Android_ITMO/Companion/app/src/main/res/layout/overlay_view_back.xml" value="0.1" />
       </map>

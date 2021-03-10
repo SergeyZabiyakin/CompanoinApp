@@ -1,28 +1,25 @@
-package com.example.companion.overlay.ui
+package com.example.companion.ui.components
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
-import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
-import android.widget.Toast
 import com.example.companion.R
-import com.example.companion.overlay.util.State
-import com.example.companion.overlay.util.px
+import com.example.companion.ui.components.util.State
 
 /**
 *  It is cloud view !
 */
 
-class OverlayViewTop(
+class OverlayTop(
     context: Context,
     private val windowManager: WindowManager,
-    private val viewBack: OverlayViewBack
+    private val back: OverlayBack
 ) {
     private val relative: View = View.inflate(context, R.layout.ovarlay_view_top, null)
     private val button: ImageButton = relative.findViewById(R.id.cloud)
@@ -72,7 +69,7 @@ class OverlayViewTop(
                     startMoveY = event.rawY.toDouble()
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    if (viewBack.state == State.CLOSE) {
+                    if (back.state == State.CLOSE) {
                         val deltaX = event.rawX - startMoveX
                         val deltaY = event.rawY - startMoveY
                         moveAt(prevMoveX + deltaX.toInt(), prevMoveY + deltaY.toInt())
@@ -80,13 +77,13 @@ class OverlayViewTop(
                 }
                 MotionEvent.ACTION_UP -> {
                     if (!isMoved) {
-                        if (viewBack.state == State.CLOSE) {
-                            viewBack.open()
-                        } else if (viewBack.state == State.OPEN) {
-                            viewBack.close()
+                        if (back.state == State.CLOSE) {
+                            back.open()
+                        } else if (back.state == State.OPEN) {
+                            back.close()
                         }
                     } else {
-                        viewBack.moveAt(params.x, params.y)
+                        back.moveAt(params.x, params.y)
                     }
                 }
             }
@@ -111,7 +108,7 @@ class OverlayViewTop(
     }
 
     fun destroy() {
-        viewBack.destroy()
         windowManager.removeView(relative)
+        back.destroy()
     }
 }

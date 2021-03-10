@@ -8,8 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"
-        tools:ignore="ScopedStorage" />
+        android:maxSdkVersion="28" />
 
     <queries>
         <intent>
@@ -24,25 +23,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Companion">
-        <service android:name=".services.MainBackService" />
-        <activity android:name=".activity.MainActivity">
+        <service android:name=".service.MainService" />
+        <activity android:name="com.example.companion.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ActivityImage"
+        <activity android:name="com.example.companion.ui.activity.ActivityImage"
             android:theme="@style/AppTheme"/>
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
     </application>
 
 </manifest>
