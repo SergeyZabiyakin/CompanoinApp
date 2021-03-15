@@ -49,6 +49,8 @@ class OverlayBack(
     }
 
     fun open() {
+        if (state == State.OPEN) return
+
         state = State.Animated
 
         scope.launch {
@@ -70,6 +72,8 @@ class OverlayBack(
     }
 
     fun close(handler: () -> Unit = {}) {
+        if (state == State.CLOSE) return
+
         state = State.Animated
 
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or

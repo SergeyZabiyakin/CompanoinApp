@@ -43,16 +43,19 @@ class MainService : Service() {
             onDestroy()
         }
 
-        val intent = Intent(this, ActivityImage::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
 
         overlayBack.setonClickListenerGallery {
+            val intent = Intent(this, ActivityImage::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
             intent.putExtra(ActivityImage.ACTION_CREATE, ActivityImage.ACTION_GALLERY_CODE)
             startActivity(intent)
         }
 
         overlayBack.setonClickListenerCamera {
+            val intent = Intent(this, ActivityImage::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
             intent.putExtra(ActivityImage.ACTION_CREATE, ActivityImage.ACTION_CAMERA_CODE)
             startActivity(intent)
         }

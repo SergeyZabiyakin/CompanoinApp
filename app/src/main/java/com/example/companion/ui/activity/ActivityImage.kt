@@ -48,24 +48,6 @@ class ActivityImage : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            CAMERA_PERM_CODE ->
-                checkGrantResults(grantResults) {
-                    cameraPictureIntent()
-                }
-            GALLERY_PERM_CODE ->
-                checkGrantResults(grantResults) {
-                    galleryPictureIntent()
-                }
-        }
-    }
-
     private fun galleryCapture() {
         askPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, GALLERY_PERM_CODE) {
             galleryPictureIntent()
@@ -106,19 +88,6 @@ class ActivityImage : AppCompatActivity() {
         startGalleryForResult.launch(gallery)
     }
 
-    private fun checkGrantResults(grantResults: IntArray, handler: () -> Unit) {
-        if (grantResults.isNotEmpty() && grantResults.none { it != PackageManager.PERMISSION_GRANTED }) {
-            handler()
-        } else {
-            Toast.makeText(
-                this,
-                "Permission is Required to use !",
-                Toast.LENGTH_SHORT
-            ).show()
-            finish()
-        }
-    }
-
     private var photoUri: Uri? = null
     private lateinit var values: ContentValues
 
@@ -140,9 +109,40 @@ class ActivityImage : AppCompatActivity() {
         startCameraForResult.launch(takePictureIntent)
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            CAMERA_PERM_CODE ->
+                checkGrantResults(grantResults) {
+                    cameraPictureIntent()
+                }
+            GALLERY_PERM_CODE ->
+                checkGrantResults(grantResults) {
+                    galleryPictureIntent()
+                }
+        }
+    }
+
     /** Check if this device has a camera */
     private fun checkCameraHardware(context: Context): Boolean {
         return context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
+    }
+
+    private fun checkGrantResults(grantResults: IntArray, handler: () -> Unit) {
+        if (grantResults.isNotEmpty() && grantResults.none { it != PackageManager.PERMISSION_GRANTED }) {
+            handler()
+        } else {
+            Toast.makeText(
+                this,
+                "Permission is Required to use !",
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
+        }
     }
 
     private val startCameraForResult =
