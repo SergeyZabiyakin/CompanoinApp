@@ -23,6 +23,7 @@ import com.example.companion.ui.activity.util.askPermissions
 
 class ActivityImage : AppCompatActivity() {
 
+
     private lateinit var imageView: ImageView
     private lateinit var buttonBack: ImageButton
 
